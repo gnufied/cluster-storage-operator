@@ -19,6 +19,7 @@ spec:
       containers:
       - args:
         - start
+        - --listen=0.0.0.0:8445
         - -v=${LOG_LEVEL}
         env:
         - name: DRIVER_IMAGE
@@ -50,6 +51,9 @@ spec:
           requests:
             memory: 50Mi
             cpu: 10m
+        ports:
+        - containerPort: 8445
+          name: azure-disk-csi-driver-operator-metrics
       priorityClassName: system-cluster-critical
       serviceAccountName: azure-disk-csi-driver-operator
       nodeSelector:

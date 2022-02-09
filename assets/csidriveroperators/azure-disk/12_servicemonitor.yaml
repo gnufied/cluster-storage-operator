@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: azure-disk-csi-driver-operator
+  namespace: openshift-cluster-storage-operator
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    interval: 30s
+    path: /metrics
+    port: azure-disk-csi-driver-operator-metrics
+    scheme: https
+    tlsConfig:
+      caFile: /etc/prometheus/configmaps/serving-certs-ca-bundle/service-ca.crt
+      serverName: azure-disk-csi-driver-operator-metrics.openshift-cluster-storage-operator.svc
+  jobLabel: component
+  selector:
+    matchLabels:
+      app: azure-disk-csi-driver-operator
